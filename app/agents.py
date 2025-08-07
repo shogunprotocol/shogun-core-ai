@@ -6,6 +6,7 @@ from .tools import DefiLlamaTool, CryptoNewsTool, VaultTxTool, VaultStateTool, l
 from .db import AllocationSnapshot
 from .arbitrage import get_iwbtc_analytics, get_arbitrage_opportunities
 from .iwbtc_vault import perform_ai_rebalance
+from .market_intelligence import get_market_intelligence, get_sentiment_score
 import json
 from web3 import Web3
 
@@ -65,12 +66,28 @@ class NewsSentimentAgent(Agent):
         )
     
     def analyze_sentiment(self, tokens: List[str] = None) -> Dict[str, Any]:
-        """Analyze sentiment for specified tokens"""
-        if not tokens:
-            tokens = ["USDC", "WETH"]  # Default tokens
-        
-        sentiment_data = self.tools[0]._run(tokens)
-        return sentiment_data
+        """Analyze sentiment for specified tokens using real market intelligence"""
+        try:
+            import asyncio
+            # Get real market intelligence
+            intelligence = asyncio.run(get_market_intelligence())
+            
+            return {
+                'overall_sentiment': intelligence['news_analysis']['overall_sentiment'],
+                'sentiment_score': intelligence['news_analysis']['sentiment_score'],
+                'total_articles': intelligence['news_analysis']['total_articles'],
+                'recent_headlines': intelligence['news_analysis']['recent_headlines'][:5],
+                'key_insights': intelligence['key_insights'],
+                'trading_signals': intelligence['trading_signals']
+            }
+        except Exception as e:
+            # Fallback to mock data
+            return {
+                'overall_sentiment': 'neutral',
+                'sentiment_score': 0.1,
+                'total_articles': 0,
+                'error': str(e)
+            }
 
 class PortfolioOptimizerAgent(Agent):
     """Agent responsible for portfolio optimization decisions"""

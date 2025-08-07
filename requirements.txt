@@ -3,6 +3,8 @@ langserve==0.0.50
 crewai>=0.28
 apscheduler
 httpx
+aiohttp
+feedparser
 pyyaml
 web3>=6.0
 eth-account
