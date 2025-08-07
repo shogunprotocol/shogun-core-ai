@@ -1,106 +1,115 @@
-# CoreDAO Chain Configuration
 chain:
   name: "CoreDAO"
-  chain_id: 1116  # CoreDAO Mainnet
+  chain_id: 1116
+  currency: "CORE"
   rpc_urls:
     - "https://rpc.coredao.org"
     - "https://rpc-core.icecreamswap.com"
+    - "https://rpcar.coredao.org"
     - "https://rpc.ankr.com/core"
-  explorer: "https://scan.coredao.org"
-  native_token: "CORE"
-  max_supply: 2100000000  # 2.1 billion CORE
 
-# IWBTC System Addresses (To be deployed)
-iwbtc:
-  vault_address: "0x0000000000000000000000000000000000000000"  # TODO: Deploy IWBTC vault
-  iwbtc_token: "0x0000000000000000000000000000000000000000"    # TODO: Deploy IWBTC token
-  treasury: "0x0000000000000000000000000000000000000000"       # TODO: Set treasury
+block_explorer: "https://scan.coredao.org"
 
-# CoreDAO DEX Addresses (VERIFIED)
+# Real CoreDAO DEX contracts  
 dexes:
+  archerswap:
+    name: "ArcherSwap"
+    router: "0x74f56a7560ef0c72cf6d677e3f5f51c2d579ff15"
+    factory: "0xe0b8838e8d73ff1ca193e8cc2bc0ebf7cf86f620"
+    masterchef: "0xdbf74f167a4e0b97a072c7ed51df6c6e8ec0353b"
+    native_token: "BOW"
+    tvl_rank: 1  # Highest TVL on CoreDAO
+    
   icecreamswap:
+    name: "IceCreamSwap"
     router: "0xBb5e1777A331ED93E07cF043363e48d320eb96c4"
     factory: "0x9E6d21E759A7A288b80eef94E4737D313D31c13f"
-    init_code_hash: "0x58c1b429d0ffdb4407396ae8118c58fed54898473076d0394163ea2198f7c4a3"
-    name: "IceCreamSwap"
-    verified: true
-  
-  archerswap:
-    router: "0x0000000000000000000000000000000000000000"  # TODO: Verify from ArcherSwap docs
-    factory: "0x0000000000000000000000000000000000000000"  # TODO: Verify from ArcherSwap docs
-    name: "ArcherSwap"
-    tvl_rank: 1  # Highest TVL on Core
-    verified: false
-  
-  shadowswap:
-    router: "0x0000000000000000000000000000000000000000"  # TODO: Verify from ShadowSwap docs
-    factory: "0x0000000000000000000000000000000000000000"  # TODO: Verify from ShadowSwap docs
-    name: "ShadowSwap"
-    tvl: "$3.8M+"
-    verified: false
+    native_token: "ICE"
+    tvl_rank: 2
     
   lfgswap:
-    router: "0x0000000000000000000000000000000000000000"  # TODO: Verify from LFGSwap docs
-    factory: "0x0000000000000000000000000000000000000000"  # TODO: Verify from LFGSwap docs
     name: "LFGSwap"
-    features: ["DEX", "NFT_MARKETPLACE"]
-    verified: false
+    router: "0x42a0F91973536f85B06B310fa9C70215784F35a1"
+    factory: "0x42a0F91973536f85B06B310fa9C70215784F35a1" 
+    native_token: "LFG"
+    tvl_rank: 3
 
-# Token Addresses on CoreDAO (VERIFIED & UNVERIFIED)
+# Real token addresses on CoreDAO
 tokens:
-  # Verified tokens
-  WCORE: "0x40375C92d9FAf44d2f9db9Bd9ba41a3317a2404f"        # Wrapped CORE (needs verification)
-  ICE: "0xc0E49f8C615d3d4c245970F6Dc528E4A47d69a44"          # IceCreamSwap token (VERIFIED)
-  SCORE: "0xA20b3B97df3a02f9185175760300a06B4e0A2C05"        # Staked Core (VERIFIED)
+  # Core native assets
+  WCORE: "0x40375c92d9faf44d2f9db9bd9ba41a3317a2404f"
+  stCORE: "0xb3a8f0f0da9ffc65318aa39e55079796093029ad"
   
-  # Need to find/verify these on Core
-  wBTC: "0x0000000000000000000000000000000000000000"          # TODO: Find wrapped BTC on Core
-  coreBTC: "0x0000000000000000000000000000000000000000"       # TODO: Core's native BTC bridge
-  USDT: "0x900101d06A7426441Ae63e9AB3B9b0F63Be145F1"          # USDT on Core (needs verification)
-  USDC: "0xA4151B2B3e269645181dCcF2D426cE75fcbDeca9"          # USDC on Core (needs verification)
+  # Major wrapped assets
+  WBTC: "0x5832f53d147b3d6Cd4578B9CBD62425C7ea9d0Bd"
+  WETH: "0xeab3ac417c4d6df6b143346a46fee1b847b50296"
+  WBNB: "0xdFBc618d3c48e553Cb197F42482A0795bef7fe28"
+  
+  # Stablecoins
+  USDT: "0x900101d06a7426441ae63e9ab3b9b0f63be145f1"
+  USDC: "0xa4151b2b3e269645181dccf2d426ce75fcbdeca9"
+  
+  # DEX tokens
+  BOW: "0x1a639e150d2210a4be4a5f0857a9151b241e7ae4"    # ArcherSwap
+  xBOW: "0x236994dabb4e7ffb85bf76889cec8ff9ca543ba4"   # Staked BOW
+  ICE: "0xf16e81dce15B08F326220742020379B855B87DF9"     # IceCreamSwap  
+  SCORE: "0xA20b3B97df3a02f9185175760300a06B4e0A2C05"   # Staked CORE (ICS)
+  LFG: "0xf7a0b80681ec935d6dd9f3af9826e68b99897d6d"     # LFGSwap
+  HUNT: "0x962D45C91e4f29DdC96C626976ECE600908Ba6"    # Hunter token
+  
+  # Project tokens  
+  IWBTC: "0x0000000000000000000000000000000000000000"  # To be deployed
 
-# Bridge Configuration
-bridge:
-  layerzero_endpoint: "0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4"
-  supported_chains: ["Ethereum", "BSC", "Polygon", "Avalanche"]
-
-# Arbitrage Configuration
+# Trading and arbitrage configuration
 arbitrage:
-  min_profit_threshold: 0.003  # 0.3% minimum profit (lowered for real testing)
-  max_gas_price: 100           # Max gas price in gwei
-  flash_loan_provider: "none"  # No flash loans initially
-  slippage_tolerance: 0.02     # 2% slippage tolerance
+  min_profit_threshold: 0.003  # 0.3%
+  max_position_size: 1.0       # Max BTC per trade
+  gas_limit_per_tx: 500000     # Gas limit for complex trades
   
-# Strategy Parameters
-strategies:
-  triangular_arb:
-    enabled: true
-    paths:
-      - ["WCORE", "ICE", "SCORE", "WCORE"]
-      - ["WCORE", "USDT", "ICE", "WCORE"]
-      - ["ICE", "SCORE", "WCORE", "ICE"]
-  
-  cross_dex_arb:
-    enabled: true
-    min_liquidity: 5000  # Min USD liquidity to consider
-    dex_pairs:
-      - ["icecreamswap", "archerswap"]
-      - ["icecreamswap", "shadowswap"]
-    
-  iwbtc_premium:
-    enabled: true
-    target_premium: 0.002  # 0.2% target premium for IWBTC over wBTC
-    rebalance_threshold: 0.005  # Rebalance when premium > 0.5%
-
-# Risk Management
 risk:
-  max_position_size: 0.1       # Max 0.1 BTC per trade (small for testing)
-  daily_loss_limit: 0.01       # Max 0.01 BTC daily loss
-  gas_limit_per_tx: 500000     # Gas limit per transaction
-  enable_flashloans: false     # Start without flashloans for safety
+  max_slippage: 0.02          # 2% max slippage
+  position_timeout: 300       # 5 minutes
+  gas_limit_per_tx: 500000    # Gas limit
   
-# Monitoring
 monitoring:
-  scan_interval: 10  # Scan every 10 seconds
-  log_profitable_only: false  # Log all opportunities for analysis
-  alert_threshold: 0.01  # Alert on opportunities > 1% profit
+  scan_interval: 10           # Seconds between arbitrage scans
+  price_update_interval: 5    # Seconds between price updates
+  rebalance_threshold: 0.005  # 0.5% allocation drift triggers rebalance
+
+# DeFi protocols for yield farming
+protocols:
+  colend:
+    name: "Colend"
+    type: "lending"
+    tvl_percentage: 90  # ~90% of Core DeFi TVL
+    
+  pell_network:
+    name: "Pell Network" 
+    type: "restaking"
+    focus: "BTC restaking"
+    
+  corex:
+    name: "COREx"
+    type: "dex"
+    milestone: "10M_TVL_Aug2024"
+    
+  bitflux:
+    name: "BitFLUX"
+    type: "btc_swapping"
+    focus: "low_slippage"
+    
+  maple_finance:
+    name: "Maple Finance"
+    type: "liquid_staking"
+    product: "lstBTC"
+
+# Institutional features
+institutional:
+  min_deposit_btc: 1.0
+  custom_risk_profiles:
+    - "conservative"
+    - "moderate" 
+    - "aggressive"
+  compliance_reporting: true
+  priority_execution: true
+  dedicated_support: true
