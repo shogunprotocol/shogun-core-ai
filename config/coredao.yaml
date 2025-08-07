@@ -1,0 +1,106 @@
+# CoreDAO Chain Configuration
+chain:
+  name: "CoreDAO"
+  chain_id: 1116  # CoreDAO Mainnet
+  rpc_urls:
+    - "https://rpc.coredao.org"
+    - "https://rpc-core.icecreamswap.com"
+    - "https://rpc.ankr.com/core"
+  explorer: "https://scan.coredao.org"
+  native_token: "CORE"
+  max_supply: 2100000000  # 2.1 billion CORE
+
+# IWBTC System Addresses (To be deployed)
+iwbtc:
+  vault_address: "0x0000000000000000000000000000000000000000"  # TODO: Deploy IWBTC vault
+  iwbtc_token: "0x0000000000000000000000000000000000000000"    # TODO: Deploy IWBTC token
+  treasury: "0x0000000000000000000000000000000000000000"       # TODO: Set treasury
+
+# CoreDAO DEX Addresses (VERIFIED)
+dexes:
+  icecreamswap:
+    router: "0xBb5e1777A331ED93E07cF043363e48d320eb96c4"
+    factory: "0x9E6d21E759A7A288b80eef94E4737D313D31c13f"
+    init_code_hash: "0x58c1b429d0ffdb4407396ae8118c58fed54898473076d0394163ea2198f7c4a3"
+    name: "IceCreamSwap"
+    verified: true
+  
+  archerswap:
+    router: "0x0000000000000000000000000000000000000000"  # TODO: Verify from ArcherSwap docs
+    factory: "0x0000000000000000000000000000000000000000"  # TODO: Verify from ArcherSwap docs
+    name: "ArcherSwap"
+    tvl_rank: 1  # Highest TVL on Core
+    verified: false
+  
+  shadowswap:
+    router: "0x0000000000000000000000000000000000000000"  # TODO: Verify from ShadowSwap docs
+    factory: "0x0000000000000000000000000000000000000000"  # TODO: Verify from ShadowSwap docs
+    name: "ShadowSwap"
+    tvl: "$3.8M+"
+    verified: false
+    
+  lfgswap:
+    router: "0x0000000000000000000000000000000000000000"  # TODO: Verify from LFGSwap docs
+    factory: "0x0000000000000000000000000000000000000000"  # TODO: Verify from LFGSwap docs
+    name: "LFGSwap"
+    features: ["DEX", "NFT_MARKETPLACE"]
+    verified: false
+
+# Token Addresses on CoreDAO (VERIFIED & UNVERIFIED)
+tokens:
+  # Verified tokens
+  WCORE: "0x40375C92d9FAf44d2f9db9Bd9ba41a3317a2404f"        # Wrapped CORE (needs verification)
+  ICE: "0xc0E49f8C615d3d4c245970F6Dc528E4A47d69a44"          # IceCreamSwap token (VERIFIED)
+  SCORE: "0xA20b3B97df3a02f9185175760300a06B4e0A2C05"        # Staked Core (VERIFIED)
+  
+  # Need to find/verify these on Core
+  wBTC: "0x0000000000000000000000000000000000000000"          # TODO: Find wrapped BTC on Core
+  coreBTC: "0x0000000000000000000000000000000000000000"       # TODO: Core's native BTC bridge
+  USDT: "0x900101d06A7426441Ae63e9AB3B9b0F63Be145F1"          # USDT on Core (needs verification)
+  USDC: "0xA4151B2B3e269645181dCcF2D426cE75fcbDeca9"          # USDC on Core (needs verification)
+
+# Bridge Configuration
+bridge:
+  layerzero_endpoint: "0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4"
+  supported_chains: ["Ethereum", "BSC", "Polygon", "Avalanche"]
+
+# Arbitrage Configuration
+arbitrage:
+  min_profit_threshold: 0.003  # 0.3% minimum profit (lowered for real testing)
+  max_gas_price: 100           # Max gas price in gwei
+  flash_loan_provider: "none"  # No flash loans initially
+  slippage_tolerance: 0.02     # 2% slippage tolerance
+  
+# Strategy Parameters
+strategies:
+  triangular_arb:
+    enabled: true
+    paths:
+      - ["WCORE", "ICE", "SCORE", "WCORE"]
+      - ["WCORE", "USDT", "ICE", "WCORE"]
+      - ["ICE", "SCORE", "WCORE", "ICE"]
+  
+  cross_dex_arb:
+    enabled: true
+    min_liquidity: 5000  # Min USD liquidity to consider
+    dex_pairs:
+      - ["icecreamswap", "archerswap"]
+      - ["icecreamswap", "shadowswap"]
+    
+  iwbtc_premium:
+    enabled: true
+    target_premium: 0.002  # 0.2% target premium for IWBTC over wBTC
+    rebalance_threshold: 0.005  # Rebalance when premium > 0.5%
+
+# Risk Management
+risk:
+  max_position_size: 0.1       # Max 0.1 BTC per trade (small for testing)
+  daily_loss_limit: 0.01       # Max 0.01 BTC daily loss
+  gas_limit_per_tx: 500000     # Gas limit per transaction
+  enable_flashloans: false     # Start without flashloans for safety
+  
+# Monitoring
+monitoring:
+  scan_interval: 10  # Scan every 10 seconds
+  log_profitable_only: false  # Log all opportunities for analysis
+  alert_threshold: 0.01  # Alert on opportunities > 1% profit
