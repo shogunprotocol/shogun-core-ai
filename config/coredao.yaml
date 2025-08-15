@@ -56,9 +56,6 @@ tokens:
   SCORE: "0xA20b3B97df3a02f9185175760300a06B4e0A2C05"   # Staked CORE (ICS)
   LFG: "0xf7a0b80681ec935d6dd9f3af9826e68b99897d6d"     # LFGSwap
   HUNT: "0x962D45C91e4f29DdC96C626976ECE600908Ba6"    # Hunter token
-  
-  # Project tokens  
-  IWBTC: "0x0000000000000000000000000000000000000000"  # To be deployed
 
 # Trading and arbitrage configuration
 arbitrage:
